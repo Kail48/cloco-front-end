@@ -1,6 +1,8 @@
 import React from "react";
 import logOutIcon from "../assets/images/icons8-logout-50.png";
 import { Tabs } from "@mantine/core";
+import UserForm from "../components/user-form";
+import UserList from "../components/user-list";
 export default function Dashboard() {
   return (
     <div className="h-screen ">
@@ -26,7 +28,10 @@ export default function Dashboard() {
 
             <Tabs.Panel value="user" pl="xs">
              <div className="w-full h-96 bg-gray-100 my-8 ">
-                
+                <div className="flex w-full">
+                 <button className="w-20 h-8 py-1 bg-black text-white mx-4 my-2 hover:bg-gray-600">Add user</button>
+                 <UserList/>
+                </div>
              </div>
             </Tabs.Panel>
 
