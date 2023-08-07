@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Pagination } from '@mantine/core';
 export default function UserList() {
     const [activePage, setPage] = useState(1);
+    const data=[]
   return (
     <div className='w-full'>
         <div className='h-72 w-full'>

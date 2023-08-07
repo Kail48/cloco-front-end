@@ -10,7 +10,23 @@ const useAxios = ({ url, method, body = null, headers = null }) => {
     const [loading, setloading] = useState(true);
 
     const fetchData = () => {
-        axios[method](url, JSON.parse(headers), JSON.parse(body))
+        let token="no"
+        if(!localStorage.getItem("token")){
+            console.log("not logged in")
+        }
+        else{
+            console.log("logged in")
+            token=localStorage.getItem("token")
+        }
+    
+        let h=JSON.parse(headers)
+ 
+        console.log(h)
+        axios[method](url,JSON.parse(body),{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+              }
+        })
             .then((res) => {
                 console.log("res",res)
                 setResponse(res.data);
@@ -19,6 +35,7 @@ const useAxios = ({ url, method, body = null, headers = null }) => {
                 if(err.message==="Network Error"){
                     navigate('/server-not-found')
                 }
+                console.log(err)
                 setError(err);
             })
             .finally(() => {

@@ -10,6 +10,7 @@ import LoginPage from './pages/login-page';
 import RegisterPage from './pages/register-page';
 import Dashboard from './pages/dashboard';
 import WelcomePage from './pages/welcome-page';
+import ServerErrorPage from './pages/server-error';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard/>,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/server-not-found",
+    element: <ServerErrorPage/>,
     errorElement: <ErrorPage />,
   },
 ]);

@@ -14,8 +14,9 @@ export default function WelcomePage() {
   const notLoggedInMessage = "No user found! Redirecting to login";
   const loggedInMessage = "Welcome back! opening dashboard";
   const goToNextPage = () => {
-    console.log(localStorage.getItem('authToken'))
+   
     if (user !== null) {
+      console.log("user found")
       navigate("/dashboard");
     } else {
       navigate("/login");
@@ -36,13 +37,13 @@ export default function WelcomePage() {
       setUser("user")
     })
     .catch((error) => {
-      console.log(error);
+
     });
   }
   useEffect(() => {
     let token=null
     if(!localStorage.getItem("token")){
-      console.log("not logged in")
+      
   }
   else{
       token=localStorage.getItem("token")
