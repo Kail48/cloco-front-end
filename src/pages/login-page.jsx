@@ -1,18 +1,49 @@
 import React from "react";
 import logo from "../assets/images/cloco-logo.svg";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import api from "../services/api";
+import toast, { Toaster } from 'react-hot-toast';
 export default function LoginPage() {
+  const navigate= useNavigate()
+  const sendLoginData=(data)=>{
+    const postData = JSON.stringify(data);
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://127.0.0.1:5000/login',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'Authorization': 'Bearer any'
+      },
+      data : postData
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      if(response.data.is_admin===true){
+        localStorage.setItem("token",response.data.access_token)
+        console.log(localStorage.getItem("token"))
+        navigate('/dashboard')
+      }
+    })
+    .catch((error) => {
+      toast.error(error.response.data.error_message);
+  
+    });
+}
     const handleSubmit=(e)=>{
         e.preventDefault()
         let data={}
         for(let i=0;i<e.target.length;i++){
             data[e.target[i].name.toString()]=e.target[i].value
         }
-        console.log(data)
-        
+        sendLoginData(data)
         
     }
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+       <Toaster />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img className="mx-auto h-10 w-auto animate-bounce" src={logo} alt="Cloco Music" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -52,14 +83,7 @@ export default function LoginPage() {
               >
                 Password
               </label>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-black hover:text-indigo-300"
-                >
-                  Forgot password?
-                </a>
-              </div>
+              
             </div>
             <div className="mt-2">
               <input
