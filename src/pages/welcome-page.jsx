@@ -1,12 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import logo from "../assets/images/cloco-logo.svg";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 export default function WelcomePage() {
   const [user, setUser] = useState(
     localStorage.getItem("authToken") ? "user" : null
   );
+
   const [isReady, setIsReady] = useState(false);
   const navigate = useNavigate();
   const notLoggedInMessage = "No user found! Redirecting to login";
@@ -19,7 +21,33 @@ export default function WelcomePage() {
       navigate("/login");
     }
   };
+  const verifyAdmin=(token)=>{
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://127.0.0.1:5000/admin/verify',
+      headers: { 
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      setUser("user")
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
   useEffect(() => {
+    let token=null
+    if(!localStorage.getItem("token")){
+      console.log("not logged in")
+  }
+  else{
+      token=localStorage.getItem("token")
+      verifyAdmin(token)
+  }
     setTimeout(() => {
       setIsReady(true);
     }, 1500);
