@@ -11,6 +11,7 @@ import RegisterPage from './pages/register-page';
 import Dashboard from './pages/dashboard';
 import WelcomePage from './pages/welcome-page';
 import ServerErrorPage from './pages/server-error';
+import ProtectedRoute from './components/protectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard/>,
+    element:<ProtectedRoute><Dashboard/></ProtectedRoute>,
     errorElement: <ErrorPage />,
   },
   {
