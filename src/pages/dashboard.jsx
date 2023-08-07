@@ -3,12 +3,17 @@ import logOutIcon from "../assets/images/icons8-logout-50.png";
 import { Tabs } from "@mantine/core";
 import UserForm from "../components/user-form";
 import UserList from "../components/user-list";
+import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
+  const navigate=useNavigate()
   return (
     <div className="h-screen ">
       <div className="flex justify-between py-2 px-4">
         <h1 className="md:text-5xl font-sans ">Admin Dashboard</h1>
-        <div className="group cursor-pointer">
+        <div className="group cursor-pointer" onClick={()=>{
+          localStorage.removeItem("token")
+          navigate('/login')
+        }}>
           <img className="cursor-pointer h-10 w-10" src={logOutIcon} alt="" />
           <h3 className="text-xl group-hover:text-red-500">Logout</h3>
         </div>
