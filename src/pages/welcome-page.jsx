@@ -1,18 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import logo from "../assets/images/cloco-logo.svg";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 export default function WelcomePage() {
-  const [user, setUser] = useState(
-    localStorage.getItem("authToken") ? "user" : null
-  );
 
   const [isReady, setIsReady] = useState(false);
   const navigate = useNavigate();
-  const notLoggedInMessage = "No user found! Redirecting to login";
-  const loggedInMessage = "Welcome back! opening dashboard";
   const goToNextPage = () => navigate('/dashboard')
 
   useEffect(() => {
@@ -51,7 +45,7 @@ export default function WelcomePage() {
             onAnimationComplete={goToNextPage}
           >
             <div className="flex flex-col items-center">
-              <h1 className="md:text-6xl">{notLoggedInMessage}</h1>
+              <h1 className="md:text-6xl">{"Not logged In"}</h1>
             </div>
           </motion.div>
         )}
