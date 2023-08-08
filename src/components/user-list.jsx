@@ -1,23 +1,39 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { Pagination } from "@mantine/core";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { Loader } from "@mantine/core";
-export default function UserList({setTab}) {
-console.log(setTab)
+import { useDisclosure } from '@mantine/hooks';
+import { Drawer} from '@mantine/core';
+import DeleteUserDialog from "./deleteUserDialog";
+import EditUser from "./editUser";
+export default function UserList() {
+  const [opened, { open, close }] = useDisclosure(false);
   const getGenderFromInitial = (code) => {
     if (code === "M") return "Male";
     if (code === "F") return "Female";
     if (code === "O") return "Other";
   };
+
   const tableHeaders=["Name","Gender","Email","Phone","Address","Date of Birth","Action"]
   const navigate = useNavigate();
   const [activePage, setPage] = useState(1);
   const [users, setUsers] = useState(null);
   const [totalPage, setTotalPage] = useState(0);
-
+  const [refreshToggle, setrefreshToggle] = useState(false);
+  const [modalAction, setModalAction] = useState(null);
+  const [currentUser,setCurrentUser]=useState(null)
+  
+const refreshList=()=>{
+  setrefreshToggle(!refreshToggle)
+}
+  const openDrawer=(action,user)=>{
+    setCurrentUser(user)
+    setModalAction(action)
+    open()
+  }
   const fetchUsers = (token) => {
     let config = {
       method: "get",
@@ -30,9 +46,9 @@ console.log(setTab)
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data.users[0]);
+     
         setUsers(response.data.users);
-        setTotalPage(response.data.total_pages - 1);
+        setTotalPage(response.data.total_pages);
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -58,7 +74,7 @@ console.log(setTab)
       token = localStorage.getItem("token");
       fetchUsers(token);
     }
-  }, [activePage]);
+  }, [activePage,refreshToggle]);
   return (
     <div className="w-full h-96 flex flex-col justify-between px-4 py-5">
       <Toaster />
@@ -116,8 +132,12 @@ console.log(setTab)
                   {user.dob}
               </td>
               <td class="px-6 py-4 flex justify-around">
-                  <span  class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Edit</span>
-                  <span  class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Delete</span>
+                  <span  class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer" onClick={()=>{
+                    openDrawer("edit",user)
+                  }}>Edit</span>
+                  <span  class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"  onClick={()=>{
+                    openDrawer("delete",user)
+                  }}>Delete</span>
               </td>
           </tr>
 
@@ -143,7 +163,13 @@ console.log(setTab)
           color="dark"
           size="lg"
         />
-       
+        <Drawer opened={opened} onClose={close} title="">
+          {
+            modalAction==="delete"?<DeleteUserDialog user={currentUser} refreshList={refreshList}/>:
+            <EditUser user={currentUser} refreshList={refreshList}/>
+          }
+        
+      </Drawer>
       </div>
     </div>
   );

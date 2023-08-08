@@ -32,7 +32,7 @@ export default function UserForm() {
       .then((response) => {
         //show success message and redirect to login
         setSuccess(true)
-        toast.success(response.data.message + "\n redirecting to login page");
+        toast.success(response.data.message);
       })
       .catch((error) => {
         //check if error is coming from axios or from server
