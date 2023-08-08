@@ -13,42 +13,10 @@ export default function WelcomePage() {
   const navigate = useNavigate();
   const notLoggedInMessage = "No user found! Redirecting to login";
   const loggedInMessage = "Welcome back! opening dashboard";
-  const goToNextPage = () => {
-   
-    if (user !== null) {
-      console.log("user found")
-      navigate("/dashboard");
-    } else {
-      navigate("/login");
-    }
-  };
-  const verifyAdmin=(token)=>{
-    let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: 'http://127.0.0.1:5000/admin/verify',
-      headers: { 
-        'Authorization': `Bearer ${token}`
-      }
-    };
-    
-    axios.request(config)
-    .then((response) => {
-      setUser("user")
-    })
-    .catch((error) => {
+  const goToNextPage = () => navigate('/dashboard')
 
-    });
-  }
   useEffect(() => {
-    let token=null
-    if(!localStorage.getItem("token")){
-      
-  }
-  else{
-      token=localStorage.getItem("token")
-      verifyAdmin(token)
-  }
+
     setTimeout(() => {
       setIsReady(true);
     }, 1500);
