@@ -1,18 +1,63 @@
 import React from "react";
 import logo from "../assets/images/cloco-logo.svg";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
+
 export default function RegisterPage() {
+  const navigate=useNavigate()
+  const sendRegisterData=(data)=>{
+    const postData = JSON.stringify(data);
+    console.log(postData)
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://127.0.0.1:5000/admin',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'Authorization': 'Bearer any'
+      },
+      data : postData
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      //show success message and redirect to login
+      toast.success(response.data.message+"\n redirecting to login page")
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+    })
+    .catch((error) => {
+      //check if error is coming from axios or from server
+      console.log(error)
+      if(error.message){
+        if(error.message==="Network Error"){
+          navigate('/server-not-found')
+        }
+      }
+      //if error is coming from backend display it as toast
+      if(error.response!=null){
+
+        toast.error(error.response.data.error_message);
+      }
+      
+  
+    });
+}
     const handleSubmit=(e)=>{
         e.preventDefault()
         let data={}
         for(let i=0;i<e.target.length;i++){
             data[e.target[i].name.toString()]=e.target[i].value
         }
-        console.log(data)
+        sendRegisterData(data)
         
         
     }
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <Toaster/>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img className="mx-auto h-10 w-auto animate-bounce" src={logo} alt="Cloco Music" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -27,7 +72,7 @@ export default function RegisterPage() {
             }}>
           <div>
             <label
-              for="first-name"
+              htmlFor="first-name"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               First name
@@ -35,9 +80,9 @@ export default function RegisterPage() {
             <div className="mt-2">
               <input
                 id="first-name"
-                name="first-name"
+                name="first_name"
                 type="text"
-                autocomplete="first-name"
+                autoComplete="first-name"
                 required
                 className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -45,7 +90,7 @@ export default function RegisterPage() {
           </div>
           <div>
             <label
-              for="last-name"
+              htmlFor="last-name"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Last name
@@ -53,9 +98,9 @@ export default function RegisterPage() {
             <div className="mt-2">
               <input
                 id="last-name"
-                name="last-name"
+                name="last_name"
                 type="text"
-                autocomplete="last-name"
+                autoComplete="last-name"
                 required
                 className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -63,7 +108,7 @@ export default function RegisterPage() {
           </div>
           <div>
             <label
-              for="phone"
+              htmlFor="phone"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Phone Number
@@ -74,7 +119,7 @@ export default function RegisterPage() {
                 name="phone"
                 type="tel"
                 pattern="[0-9]{10}"
-                autocomplete="phone"
+                autoComplete="phone"
                 required
                 className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -82,7 +127,7 @@ export default function RegisterPage() {
           </div>
           <div>
             <label
-              for="gender"
+              htmlFor="gender"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Gender
@@ -103,7 +148,7 @@ export default function RegisterPage() {
           
           <div>
             <label
-              for="birth-date"
+              htmlFor="birth-date"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Date of Birth
@@ -111,7 +156,7 @@ export default function RegisterPage() {
             <div className="mt-2">
               <input
                 id="birth-date"
-                name="birth-date"
+                name="dob"
                 type="date"
                 
                 required
@@ -122,7 +167,7 @@ export default function RegisterPage() {
           <div>
             <div className="flex items-center justify-between">
               <label
-                for="address"
+                htmlFor="address"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Address
@@ -140,7 +185,7 @@ export default function RegisterPage() {
           </div>
           <div>
             <label
-              for="email"
+              htmlFor="email"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Email address
@@ -150,7 +195,7 @@ export default function RegisterPage() {
                 id="email"
                 name="email"
                 type="email"
-                autocomplete="email"
+                autoComplete="email"
                 required
                 className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -160,7 +205,7 @@ export default function RegisterPage() {
           <div>
             <div className="flex items-center justify-between">
               <label
-                for="password"
+                htmlFor="password"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Password
@@ -171,7 +216,7 @@ export default function RegisterPage() {
                 id="password"
                 name="password"
                 type="password"
-                autocomplete="current-password"
+                autoComplete="current-password"
                 required
                 className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -180,7 +225,7 @@ export default function RegisterPage() {
           <div>
             <div className="flex items-center justify-between">
               <label
-                for="password2"
+                htmlFor="password2"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Confirm Password
