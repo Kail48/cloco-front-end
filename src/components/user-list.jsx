@@ -5,8 +5,8 @@ import { Pagination } from "@mantine/core";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { Loader } from "@mantine/core";
-export default function UserList() {
-
+export default function UserList({setTab}) {
+console.log(setTab)
   const getGenderFromInitial = (code) => {
     if (code === "M") return "Male";
     if (code === "F") return "Female";
@@ -115,8 +115,9 @@ export default function UserList() {
               <td class="px-6 py-4">
                   {user.dob}
               </td>
-              <td class="px-6 py-4">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+              <td class="px-6 py-4 flex justify-around">
+                  <span  class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Edit</span>
+                  <span  class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Delete</span>
               </td>
           </tr>
 
@@ -134,7 +135,7 @@ export default function UserList() {
           </div>
         )}
       </div>
-      <div className="px-2 py-1 flex ">
+      <div className="px-2 py-1 flex mt-12 justify-around">
         <Pagination
           value={activePage}
           onChange={setPage}
@@ -142,6 +143,7 @@ export default function UserList() {
           color="dark"
           size="lg"
         />
+       
       </div>
     </div>
   );
