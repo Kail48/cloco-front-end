@@ -22,13 +22,13 @@ export default function LoginPage() {
     .then((response) => {
       if(response.data.is_admin===true){
         localStorage.setItem("token",response.data.access_token)
-        console.log(localStorage.getItem("token"))
+      
         navigate('/dashboard')
       }
     })
     .catch((error) => {
       //check if error is coming from axios or from server
-      console.log(error)
+ 
       if(error.message){
         if(error.message==="Network Error"){
           navigate('/server-not-found')
@@ -36,7 +36,7 @@ export default function LoginPage() {
       }
       //if error is coming from backend display it as toast
       if(error.response!=null){
-        console.log("here too")
+
         toast.error(error.response.data.error_message);
       }
       
