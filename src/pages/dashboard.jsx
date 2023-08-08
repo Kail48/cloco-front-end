@@ -4,24 +4,24 @@ import { Tabs } from "@mantine/core";
 import UserForm from "../components/user-form";
 import UserList from "../components/user-list";
 import { useNavigate } from "react-router-dom";
+import UsersTab from "../components/usersTab";
 export default function Dashboard() {
   const navigate=useNavigate()
   return (
-    <div className="h-screen ">
-      <div className="flex justify-between py-2 px-4">
-        <h1 className="md:text-5xl font-sans ">Admin Dashboard</h1>
+    <div className="h-screen overflow-y-hidden">
+      <div className="flex justify-between py-2 px-4 bg-[#A8A196]">
+        <h1 className="md:text-2xl font-sans ">Admin Dashboard</h1>
         <div className="group cursor-pointer" onClick={()=>{
           localStorage.removeItem("token")
           navigate('/login')
         }}>
-          <img className="cursor-pointer h-10 w-10" src={logOutIcon} alt="" />
-          <h3 className="text-xl group-hover:text-red-500">Logout</h3>
+          <h3 className="md:text-md group-hover:text-[#61677A]  ">Logout</h3>
         </div>
       </div>
-      <div className="flex justify-center h-full py-2">
-        <div className="w-full mx-2 h-full bg-gray-200 my-5 px-2 py-2">
-          <Tabs color="dark" variant="pills" orientation="horizontal" defaultValue="gallery">
-            <Tabs.List>
+      <div className="flex justify-center h-full ">
+        <div className="w-full h-full">
+          <Tabs color="gray" variant="pills" orientation="vertical" defaultValue="user">
+            <Tabs.List position="left" className="bg-[#61677A] px-2 h-screen gap-y-10 pt-10">
               <Tabs.Tab value="user">
                 Users
               </Tabs.Tab>
@@ -32,12 +32,7 @@ export default function Dashboard() {
             </Tabs.List>
 
             <Tabs.Panel value="user" pl="xs">
-             <div className="w-full h-96 bg-gray-100 my-8 ">
-                <div className="flex w-full">
-                 <button className="w-20 h-8 py-1 bg-black text-white mx-4 my-2 hover:bg-gray-600">Add user</button>
-                 <UserList/>
-                </div>
-             </div>
+             <UsersTab/>
             </Tabs.Panel>
 
             <Tabs.Panel value="artist" pl="xs">
