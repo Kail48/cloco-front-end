@@ -1,9 +1,8 @@
 import React from "react";
 import logo from "../assets/images/cloco-logo.svg";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
 import toast, { Toaster } from 'react-hot-toast';
+import axios from "axios";
 export default function LoginPage() {
   const navigate= useNavigate()
   const sendLoginData=(data)=>{
@@ -28,7 +27,19 @@ export default function LoginPage() {
       }
     })
     .catch((error) => {
-      toast.error(error.response.data.error_message);
+      //check if error is coming from axios or from server
+      console.log(error)
+      if(error.message){
+        if(error.message==="Network Error"){
+          navigate('/server-not-found')
+        }
+      }
+      //if error is coming from backend display it as toast
+      if(error.response!=null){
+        console.log("here too")
+        toast.error(error.response.data.error_message);
+      }
+      
   
     });
 }
