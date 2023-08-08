@@ -23,6 +23,7 @@ export default function ProtectedRoute() {
         })
         .catch((error) => {
             console.log(error)
+            navigate('/login')
         });}
 
     useEffect(() => {
