@@ -20,15 +20,24 @@ export default function LoginPage() {
     
     axios.request(config)
     .then((response) => {
+ 
       if(response.data.is_admin===true){
         localStorage.setItem("token",response.data.access_token)
       
         navigate('/dashboard')
       }
+      else{
+        toast(
+          "😅 You are Trying to login from a normal account.\n We only support admin accounts for now.\n please create a new admin account.",
+          {
+            duration: 6000,
+          }
+        );
+      }
     })
     .catch((error) => {
       //check if error is coming from axios or from server
- 
+      console.log(error)
       if(error.message){
         if(error.message==="Network Error"){
           navigate('/server-not-found')
