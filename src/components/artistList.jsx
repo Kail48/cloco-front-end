@@ -9,7 +9,9 @@ import { useDisclosure } from '@mantine/hooks';
 import { Drawer} from '@mantine/core';
 import DeleteUserDialog from "./deleteUserDialog";
 import EditUser from "./editUser";
-export default function UserList() {
+import DeleteArtistDialog from "./deleteArtistDialog";
+import EditArtist from "./editArtist";
+export default function ArtistList({setTab}) {
   const [opened, { open, close }] = useDisclosure(false);
   const getGenderFromInitial = (code) => {
     if (code === "M") return "Male";
@@ -17,28 +19,28 @@ export default function UserList() {
     if (code === "O") return "Other";
   };
 
-  const tableHeaders=["Name","Gender","Email","Phone","Address","Date of Birth","Action"]
+
   const navigate = useNavigate();
   const [activePage, setPage] = useState(1);
-  const [users, setUsers] = useState(null);
+  const [artists, setArtists] = useState(null);
   const [totalPage, setTotalPage] = useState(0);
   const [refreshToggle, setrefreshToggle] = useState(false);
   const [modalAction, setModalAction] = useState(null);
-  const [currentUser,setCurrentUser]=useState(null)
+  const [currentArtist,setCurrentArtist]=useState(null)
   
 const refreshList=()=>{
   setrefreshToggle(!refreshToggle)
 }
-  const openDrawer=(action,user)=>{
-    setCurrentUser(user)
+  const openDrawer=(action,artist)=>{
+    setCurrentArtist(artist)
     setModalAction(action)
     open()
   }
-  const fetchUsers = (token) => {
+  const fetchArtists = (token) => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `http://127.0.0.1:5000/users?page=${activePage}`,
+      url: `http://127.0.0.1:5000/artists?page=${activePage}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -46,8 +48,8 @@ const refreshList=()=>{
     axios
       .request(config)
       .then((response) => {
-     
-        setUsers(response.data.users);
+        console.log(response.data)
+        setArtists(response.data.artist);
         setTotalPage(response.data.total_pages);
       })
       .catch((error) => {
@@ -72,14 +74,14 @@ const refreshList=()=>{
       navigate("/login");
     } else {
       token = localStorage.getItem("token");
-      fetchUsers(token);
+      fetchArtists(token);
     }
   }, [activePage,refreshToggle]);
   return (
     <div className="w-full h-96 flex flex-col justify-between px-4 py-5">
       <Toaster />
       <div className="w-full">
-        {users ? (
+        {artists ? (
      
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -92,10 +94,10 @@ const refreshList=()=>{
                     Gender
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Phone
+                   Debut Year
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Email
+                No of Albums
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Address
@@ -110,33 +112,35 @@ const refreshList=()=>{
         </thead>
         <tbody>
           {
-            users.map((user,index)=>(
+            artists.map((artist,index)=>(
               <tr key={index} class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
               
               <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {`${user.first_name} ${user.last_name}`}
+                  {artist.name}
               </th>
               <td class="px-6 py-4">
-                  {getGenderFromInitial(user.gender)}
+                  {getGenderFromInitial(artist.gender)}
               </td>
               <td class="px-6 py-4">
-                  {user.phone}
+                  {artist.first_release_year}
               </td>
               <td class="px-6 py-4">
-                  {user.email}
+                  {artist.number_of_albums_released}
               </td>
               <td class="px-6 py-4">
-                  {user.address}
+                  {artist.address}
               </td>
               <td class="px-6 py-4">
-                  {user.dob}
+                  {artist.dob}
               </td>
               <td class="px-6 py-4 flex justify-around">
+              <span  class="font-medium text-green-600  hover:underline cursor-pointer">View music</span>
+                
                   <span  class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer" onClick={()=>{
-                    openDrawer("edit",user)
+                    openDrawer("edit",artist)
                   }}>Edit</span>
                   <span  class="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"  onClick={()=>{
-                    openDrawer("delete",user)
+                    openDrawer("delete",artist)
                   }}>Delete</span>
               </td>
           </tr>
@@ -165,8 +169,8 @@ const refreshList=()=>{
         />
         <Drawer opened={opened} onClose={close} title="">
           {
-            modalAction==="delete"?<DeleteUserDialog user={currentUser} refreshList={refreshList}/>:
-            <EditUser user={currentUser} refreshList={refreshList}/>
+            modalAction==="delete"?<DeleteArtistDialog artist={currentArtist} refreshList={refreshList}/>:
+            <EditArtist artist={currentArtist} refreshList={refreshList}/>
           }
         
       </Drawer>

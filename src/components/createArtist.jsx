@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function UserForm() {
+export default function ArtistForm() {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const sendRegisterData = (data) => {
@@ -19,7 +19,7 @@ export default function UserForm() {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/user",
+      url: "http://127.0.0.1:5000/artist",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -31,6 +31,7 @@ export default function UserForm() {
       .request(config)
       .then((response) => {
         //show success message and redirect to login
+        console.log(response)
         setSuccess(true)
         toast.success(response.data.message);
       })
@@ -54,10 +55,11 @@ export default function UserForm() {
     for (let i = 0; i < e.target.length; i++) {
       data[e.target[i].name.toString()] = e.target[i].value;
     }
+    
     sendRegisterData(data);
   };
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-col justify-center px-6 py-4 lg:px-8">
       <Toaster />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
@@ -66,13 +68,13 @@ export default function UserForm() {
           alt="Cloco Music"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Add Uew User
+          Add New Artist
         </h2>
       </div>
 
       {success ? (
         <div className="w-full flex items-center justify-center">
-          <h1>New user added you can now close this drawer</h1>
+          <h1>New Artist added you can now close this drawer</h1>
         </div>
       ) : (
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -85,53 +87,37 @@ export default function UserForm() {
           >
             <div>
               <label
-                htmlFor="first-name"
+                htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                First name
+                Name
               </label>
               <div className="mt-2">
                 <input
-                  id="first-name"
-                  name="first_name"
+                  id="name"
+                  name="name"
                   type="text"
-                  autoComplete="first-name"
+                  autoComplete="name"
                   required
                   className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
+            
             <div>
               <label
-                htmlFor="last-name"
+                htmlFor="first-release"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Last name
+                Debut Year
               </label>
               <div className="mt-2">
                 <input
-                  id="last-name"
-                  name="last_name"
-                  type="text"
-                  autoComplete="last-name"
-                  required
-                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="phone"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Phone Number
-              </label>
-              <div className="mt-2">
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  pattern="[0-9]{10}"
+                  id="first-release"
+                  name="first_release_year"
+                  type="number"
+                  min="1000" 
+                  max="3000"
                   autoComplete="phone"
                   required
                   className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -196,58 +182,20 @@ export default function UserForm() {
               </div>
             </div>
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
               <div className="flex items-center justify-between">
                 <label
-                  htmlFor="password"
+                  htmlFor="albums"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                  No. of Albums
                 </label>
               </div>
               <div className="mt-2">
                 <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password2"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Confirm Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password2"
-                  name="password2"
-                  type="password"
+                  id="albums"
+                  name="number_of_albums_released"
+                  type="number"
+                  
                   required
                   className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />

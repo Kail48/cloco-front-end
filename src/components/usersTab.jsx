@@ -14,6 +14,7 @@ const pages={
 }
   return (
     <div className="w-full h-full overflow-y-scroll my-8 ">
+        <h1 className='text-center md:text-xl font-bold'>Users</h1>
     <div className="flex w-full">
     
      {pages[activeUserTab]}
