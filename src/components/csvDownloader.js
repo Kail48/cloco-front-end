@@ -15,7 +15,7 @@ const FileDownloader = () => {
     setDownloading(true);
 
     axios({
-      url: `${baseUrl}/artist/csv`, 
+      url: `${baseUrl}/artists/csv`, 
       method: "GET",
       responseType: "blob",
       headers: {
