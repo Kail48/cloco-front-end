@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function UserForm({refresh}) {
+export default function UserForm({ refresh }) {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const sendRegisterData = (data) => {
@@ -15,7 +15,7 @@ export default function UserForm({refresh}) {
       token = localStorage.getItem("token");
     }
     const postData = JSON.stringify(data);
-  
+
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -31,13 +31,13 @@ export default function UserForm({refresh}) {
       .request(config)
       .then((response) => {
         //show success message and redirect to login
-        setSuccess(true)
+        setSuccess(true);
         toast.success(response.data.message);
-        refresh()
+        refresh();
       })
       .catch((error) => {
         //check if error is coming from axios or from server
-        console.log(error);
+
         if (error.message) {
           if (error.message === "Network Error") {
             navigate("/server-not-found");
@@ -45,7 +45,6 @@ export default function UserForm({refresh}) {
         }
         //if error is coming from backend display it as toast
         if (error.response != null) {
-          
           alert(error.response.data.error_message);
         }
       });

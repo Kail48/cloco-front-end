@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function ArtistForm({refresh}) {
+export default function ArtistForm({ refresh }) {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const sendRegisterData = (data) => {
@@ -15,7 +15,7 @@ export default function ArtistForm({refresh}) {
       token = localStorage.getItem("token");
     }
     const postData = JSON.stringify(data);
-    console.log(postData);
+
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -31,14 +31,14 @@ export default function ArtistForm({refresh}) {
       .request(config)
       .then((response) => {
         //show success message and redirect to login
-        console.log(response)
-        setSuccess(true)
+
+        setSuccess(true);
         toast.success(response.data.message);
-        refresh()
+        refresh();
       })
       .catch((error) => {
         //check if error is coming from axios or from server
-        console.log(error);
+
         if (error.message) {
           if (error.message === "Network Error") {
             navigate("/server-not-found");
@@ -56,7 +56,7 @@ export default function ArtistForm({refresh}) {
     for (let i = 0; i < e.target.length; i++) {
       data[e.target[i].name.toString()] = e.target[i].value;
     }
-    
+
     sendRegisterData(data);
   };
   return (
@@ -104,7 +104,7 @@ export default function ArtistForm({refresh}) {
                 />
               </div>
             </div>
-            
+
             <div>
               <label
                 htmlFor="first-release"
@@ -117,7 +117,7 @@ export default function ArtistForm({refresh}) {
                   id="first-release"
                   name="first_release_year"
                   type="number"
-                  min="1000" 
+                  min="1000"
                   max="3000"
                   autoComplete="phone"
                   required
@@ -196,7 +196,6 @@ export default function ArtistForm({refresh}) {
                   id="albums"
                   name="number_of_albums_released"
                   type="number"
-                  
                   required
                   className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />

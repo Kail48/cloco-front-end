@@ -10,7 +10,6 @@ export default function UsersTab() {
 
   const refreshList = () => {
     setRefreshToggle(!refreshToggle);
- 
   };
 
   return (

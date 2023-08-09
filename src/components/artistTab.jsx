@@ -14,7 +14,7 @@ const [opened, { open, close }] = useDisclosure(false);
 const [refreshToggle,setRefreshToggle]=useState(false)
 const [musicViewArtist,setMusicViewArtist]=useState(null)
 const viewMusicPage=(artist)=>{
-  console.log("artist",artist)
+  
   setActiveArtistTab("music-list");
   setMusicViewArtist(artist);
 }

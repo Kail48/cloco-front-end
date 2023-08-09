@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function MusicForm({artistId,refreshTab}) {
+export default function MusicForm({ artistId, refreshTab }) {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const sendRegisterData = (data) => {
@@ -14,11 +14,11 @@ export default function MusicForm({artistId,refreshTab}) {
     } else {
       token = localStorage.getItem("token");
     }
-    
-   data["artist_id"]=artistId
-  
+
+    data["artist_id"] = artistId;
+
     const postData = JSON.stringify(data);
-    console.log("data",postData);
+
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -34,14 +34,14 @@ export default function MusicForm({artistId,refreshTab}) {
       .request(config)
       .then((response) => {
         //show success message and redirect to login
-        console.log(response)
-        setSuccess(true)
+
+        setSuccess(true);
         toast.success(response.data.message);
-        refreshTab()
+        refreshTab();
       })
       .catch((error) => {
         //check if error is coming from axios or from server
-        console.log(error);
+
         if (error.message) {
           if (error.message === "Network Error") {
             navigate("/server-not-found");
@@ -59,7 +59,7 @@ export default function MusicForm({artistId,refreshTab}) {
     for (let i = 0; i < e.target.length; i++) {
       data[e.target[i].name.toString()] = e.target[i].value;
     }
-    
+
     sendRegisterData(data);
   };
   return (
@@ -107,8 +107,7 @@ export default function MusicForm({artistId,refreshTab}) {
                 />
               </div>
             </div>
-            
-           
+
             <div>
               <label
                 htmlFor="genre"
@@ -127,12 +126,10 @@ export default function MusicForm({artistId,refreshTab}) {
                   <option value="jazz">Jazz</option>
                   <option value="country">Country</option>
                   <option value="classic">Classic</option>
-
                 </select>
               </div>
             </div>
 
-           
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -152,8 +149,7 @@ export default function MusicForm({artistId,refreshTab}) {
                 />
               </div>
             </div>
-           
-           
+
             <div>
               <button
                 type="submit"

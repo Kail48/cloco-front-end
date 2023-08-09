@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-export default function DeleteMusicDialog({ music,refreshList }) {
+export default function DeleteMusicDialog({ music, refreshList }) {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const sendDeleteId = (id) => {
@@ -27,14 +27,14 @@ export default function DeleteMusicDialog({ music,refreshList }) {
       .request(config)
       .then((response) => {
         //show success message and redirect to login
-        console.log(response);
+
         setSuccess(true);
         toast.success(response.data.message);
-        refreshList()
+        refreshList();
       })
       .catch((error) => {
         //check if error is coming from axios or from server
-        console.log(error);
+
         if (error.message) {
           if (error.message === "Network Error") {
             navigate("/server-not-found");
@@ -54,7 +54,9 @@ export default function DeleteMusicDialog({ music,refreshList }) {
         </div>
       ) : (
         <div className="flex flex-col justify-center">
-          <h1 className="text-center md:text-xl">Do you want to delete records for  {music.title}?</h1>
+          <h1 className="text-center md:text-xl">
+            Do you want to delete records for {music.title}?
+          </h1>
           <button
             onClick={() => {
               sendDeleteId(music.id);
