@@ -10,13 +10,13 @@ const useAxios = ({ url, method, body = null, headers = null }) => {
     const [loading, setloading] = useState(true);
 
     const fetchData = () => {
-        let token="no"
+        let token=null
         if(!localStorage.getItem("token")){
-            console.log("not logged in")
+            navigate('/login')
         }
         else{
-            console.log("logged in")
             token=localStorage.getItem("token")
+            console.log("got token", token)
         }
     
         let h=JSON.parse(headers)

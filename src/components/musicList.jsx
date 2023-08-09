@@ -7,9 +7,6 @@ import toast, { Toaster } from "react-hot-toast";
 import { Loader } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Drawer } from "@mantine/core";
-
-import DeleteArtistDialog from "./deleteArtistDialog";
-import EditArtist from "./editArtist";
 import DeleteMusicDialog from "./deleteMusicDialog";
 import EditMusic from "./editMusic";
 export default function MusicList({ artistId,refreshFromTab }) {
