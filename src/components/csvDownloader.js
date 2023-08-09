@@ -39,7 +39,7 @@ const navigate=useNavigate()
 
   return (
     <div>
-      <button onClick={handleDownload} disabled={downloading} className="py-2 px-2 bg-black text-white rounded-md hover:bg-gray-400 hover:text-black">
+      <button onClick={handleDownload} disabled={downloading} className="py-3 px-2 bg-black text-white rounded-md hover:bg-gray-400 hover:text-black">
         {downloading ? 'Downloading...' : 'Export artist to csv'}
       </button>
     </div>
