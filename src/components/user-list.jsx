@@ -8,6 +8,7 @@ import { Loader } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Drawer } from "@mantine/core";
 import DeleteUserDialog from "./deleteUserDialog";
+import baseUrl from "../services/api";
 import EditUser from "./editUser";
 
 export default function UserList({ refresh }) {
@@ -48,7 +49,7 @@ export default function UserList({ refresh }) {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `http://127.0.0.1:5000/users?page=${activePage}`,
+      url: `${baseUrl}/users?page=${activePage}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

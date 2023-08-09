@@ -43,7 +43,7 @@ export default function WelcomePage() {
             onAnimationComplete={goToNextPage}
           >
             <div className="flex flex-col items-center">
-              <h1 className="md:text-6xl">{"Not logged In"}</h1>
+              <h1 className="md:text-6xl">{""}</h1>
             </div>
           </motion.div>
         )}

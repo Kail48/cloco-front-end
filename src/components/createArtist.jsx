@@ -3,7 +3,7 @@ import logo from "../assets/images/cloco-logo.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-
+import baseUrl from "../services/api";
 export default function ArtistForm({ refresh }) {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function ArtistForm({ refresh }) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/artist",
+      url: `${baseUrl}/artist`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import baseUrl from "../services/api";
 import toast, { Toaster } from "react-hot-toast";
 const FileUploader = ({ refreshTab }) => {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const FileUploader = ({ refreshTab }) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/artists/csv",
+      url: `${baseUrl}/artists/csv`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

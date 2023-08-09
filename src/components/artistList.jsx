@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Loader } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Drawer } from "@mantine/core";
-
+import baseUrl from "../services/api";
 import DeleteArtistDialog from "./deleteArtistDialog";
 import EditArtist from "./editArtist";
 export default function ArtistList({ viewMusicPage, refresh }) {
@@ -38,7 +38,7 @@ export default function ArtistList({ viewMusicPage, refresh }) {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `http://127.0.0.1:5000/artists?page=${activePage}`,
+      url: `${baseUrl}/artists?page=${activePage}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

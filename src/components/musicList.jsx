@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import baseUrl from "../services/api";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { Loader } from "@mantine/core";
@@ -37,7 +37,7 @@ export default function MusicList({ artistId, refreshFromTab }) {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `http://127.0.0.1:5000/musics?artist_id=${artistId}`,
+      url: `${baseUrl}/musics?artist_id=${artistId}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

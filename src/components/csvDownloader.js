@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import baseUrl from "../services/api";
 const FileDownloader = () => {
   const [downloading, setDownloading] = useState(false);
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const FileDownloader = () => {
     setDownloading(true);
 
     axios({
-      url: "http://127.0.0.1:5000/artists/csv", // Replace with the actual API endpoint
+      url: `${baseUrl}/csv`, 
       method: "GET",
       responseType: "blob",
       headers: {

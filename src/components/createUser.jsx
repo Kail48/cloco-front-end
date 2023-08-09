@@ -3,8 +3,9 @@ import logo from "../assets/images/cloco-logo.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-
+import baseUrl from '../services/api'
 export default function UserForm({ refresh }) {
+
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const sendRegisterData = (data) => {
@@ -19,7 +20,7 @@ export default function UserForm({ refresh }) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/user",
+      url: `${baseUrl}/user`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -37,7 +38,7 @@ export default function UserForm({ refresh }) {
       })
       .catch((error) => {
         //check if error is coming from axios or from server
-
+        console.log(error)
         if (error.message) {
           if (error.message === "Network Error") {
             navigate("/server-not-found");

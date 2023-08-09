@@ -3,7 +3,7 @@ import logo from "../assets/images/cloco-logo.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-
+import baseUrl from "../services/api";
 export default function MusicForm({ artistId, refreshTab }) {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function MusicForm({ artistId, refreshTab }) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/music",
+      url: `${baseUrl}/music`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

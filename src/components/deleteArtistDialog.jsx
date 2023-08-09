@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import baseUrl from "../services/api";
 export default function DeleteArtistDialog({ artist, refreshList }) {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function DeleteArtistDialog({ artist, refreshList }) {
     let config = {
       method: "delete",
       maxBodyLength: Infinity,
-      url: `http://127.0.0.1:5000/artist/${id}`,
+      url: `${baseUrl}/artist/${id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

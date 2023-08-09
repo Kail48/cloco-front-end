@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Dashboard from "../pages/dashboard";
-
+import baseUrl from "../services/api";
 export default function ProtectedRoute() {
   const [pass, setPass] = useState(false);
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ export default function ProtectedRoute() {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/admin/verify",
+      url: `${baseUrl}/admin/verify`,
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -3,6 +3,7 @@ import logo from "../assets/images/cloco-logo.svg";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import baseUrl from "../services/api";
 export default function LoginPage() {
   const navigate = useNavigate();
   const sendLoginData = (data) => {
@@ -10,7 +11,7 @@ export default function LoginPage() {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://127.0.0.1:5000/login",
+      url: `${baseUrl}/login`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer any",
