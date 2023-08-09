@@ -1,81 +1,83 @@
 import React from "react";
 import logo from "../assets/images/cloco-logo.svg";
 import { useNavigate } from "react-router-dom";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 export default function LoginPage() {
-  const navigate= useNavigate()
-  const sendLoginData=(data)=>{
+  const navigate = useNavigate();
+  const sendLoginData = (data) => {
     const postData = JSON.stringify(data);
     let config = {
-      method: 'post',
+      method: "post",
       maxBodyLength: Infinity,
-      url: 'http://127.0.0.1:5000/login',
-      headers: { 
-        'Content-Type': 'application/json', 
-        'Authorization': 'Bearer any'
+      url: "http://127.0.0.1:5000/login",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer any",
       },
-      data : postData
+      data: postData,
     };
-    
-    axios.request(config)
-    .then((response) => {
- 
-      if(response.data.is_admin===true){
-        localStorage.setItem("token",response.data.access_token)
-      
-        navigate('/dashboard')
-      }
-      else{
-        toast(
-          "😅 You are Trying to login from a normal account.\n We only support admin accounts for now.\n please create a new admin account.",
-          {
-            duration: 6000,
-          }
-        );
-      }
-    })
-    .catch((error) => {
-      //check if error is coming from axios or from server
-      console.log(error)
-      if(error.message){
-        if(error.message==="Network Error"){
-          navigate('/server-not-found')
-        }
-      }
-      //if error is coming from backend display it as toast
-      if(error.response!=null){
 
-        toast.error(error.response.data.error_message);
-      }
-      
-  
-    });
-}
-    const handleSubmit=(e)=>{
-        e.preventDefault()
-        let data={}
-        for(let i=0;i<e.target.length;i++){
-            data[e.target[i].name.toString()]=e.target[i].value
+    axios
+      .request(config)
+      .then((response) => {
+        if (response.data.is_admin === true) {
+          localStorage.setItem("token", response.data.access_token);
+
+          navigate("/dashboard");
+        } else {
+          toast(
+            "😅 You are Trying to login from a normal account.\n We only support admin accounts for now.\n please create a new admin account.",
+            {
+              duration: 6000,
+            }
+          );
         }
-        sendLoginData(data)
-        
+      })
+      .catch((error) => {
+        //check if error is coming from axios or from server
+
+        if (error.message) {
+          if (error.message === "Network Error") {
+            navigate("/server-not-found");
+          }
+        }
+        //if error is coming from backend display it as toast
+        if (error.response != null) {
+          toast.error(error.response.data.error_message);
+        }
+      });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let data = {};
+    for (let i = 0; i < e.target.length; i++) {
+      data[e.target[i].name.toString()] = e.target[i].value;
     }
+    sendLoginData(data);
+  };
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-       <Toaster />
+      <Toaster />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img className="mx-auto h-10 w-auto animate-bounce" src={logo} alt="Cloco Music" />
+        <img
+          className="mx-auto h-10 w-auto animate-bounce"
+          src={logo}
+          alt="Cloco Music"
+        />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
         </h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={e=>{
-            e.preventDefault()
-            handleSubmit(e)
-            }}>
+        <form
+          className="space-y-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(e);
+          }}
+        >
           <div>
             <label
               htmlFor="email"
@@ -103,7 +105,6 @@ export default function LoginPage() {
               >
                 Password
               </label>
-              
             </div>
             <div className="mt-2">
               <input

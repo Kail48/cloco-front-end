@@ -1,8 +1,5 @@
 import React from "react";
-import logOutIcon from "../assets/images/icons8-logout-50.png";
 import { Tabs } from "@mantine/core";
-import UserForm from "../components/user-form";
-import UserList from "../components/user-list";
 import { useNavigate } from "react-router-dom";
 import UsersTab from "../components/usersTab";
 import ArtistTab from "../components/artistTab";

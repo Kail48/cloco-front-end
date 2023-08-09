@@ -4,13 +4,11 @@ import logo from "../assets/images/cloco-logo.svg";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 export default function WelcomePage() {
-
   const [isReady, setIsReady] = useState(false);
   const navigate = useNavigate();
-  const goToNextPage = () => navigate('/dashboard')
+  const goToNextPage = () => navigate("/dashboard");
 
   useEffect(() => {
-
     setTimeout(() => {
       setIsReady(true);
     }, 1500);
