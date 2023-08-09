@@ -7,11 +7,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { Loader } from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
 import { Drawer} from '@mantine/core';
-import DeleteUserDialog from "./deleteUserDialog";
-import EditUser from "./editUser";
+
 import DeleteArtistDialog from "./deleteArtistDialog";
 import EditArtist from "./editArtist";
-export default function ArtistList({setTab}) {
+export default function ArtistList({viewMusicPage}) {
   const [opened, { open, close }] = useDisclosure(false);
   const getGenderFromInitial = (code) => {
     if (code === "M") return "Male";
@@ -84,6 +83,7 @@ const refreshList=()=>{
         {artists ? (
      
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<h1 className='text-center md:text-xl font-bold'>Artists</h1>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -134,7 +134,7 @@ const refreshList=()=>{
                   {artist.dob}
               </td>
               <td class="px-6 py-4 flex justify-around">
-              <span  class="font-medium text-green-600  hover:underline cursor-pointer">View music</span>
+              <span  class="font-medium text-green-600  hover:underline cursor-pointer" onClick={()=>viewMusicPage(artist)}>View music</span>
                 
                   <span  class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer" onClick={()=>{
                     openDrawer("edit",artist)
