@@ -25,7 +25,7 @@ export default function EditUser({ user, refreshList }) {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: `${baseUrl}/${user.id}`,
+      url: `${baseUrl}/user/${user.id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

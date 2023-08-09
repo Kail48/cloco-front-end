@@ -23,7 +23,7 @@ export default function EditMusic({ music, refreshList }) {
     let config = {
       method: "put",
       maxBodyLength: Infinity,
-      url: `${baseUrl}/${music.id}`,
+      url: `${baseUrl}/music/${music.id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
