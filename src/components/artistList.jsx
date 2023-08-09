@@ -10,7 +10,7 @@ import { Drawer} from '@mantine/core';
 
 import DeleteArtistDialog from "./deleteArtistDialog";
 import EditArtist from "./editArtist";
-export default function ArtistList({viewMusicPage}) {
+export default function ArtistList({viewMusicPage,refresh}) {
   const [opened, { open, close }] = useDisclosure(false);
   const getGenderFromInitial = (code) => {
     if (code === "M") return "Male";
@@ -75,7 +75,7 @@ const refreshList=()=>{
       token = localStorage.getItem("token");
       fetchArtists(token);
     }
-  }, [activePage,refreshToggle]);
+  }, [activePage,refreshToggle,refresh]);
   return (
     <div className="w-full h-96 flex flex-col justify-between px-4 py-5">
       <Toaster />

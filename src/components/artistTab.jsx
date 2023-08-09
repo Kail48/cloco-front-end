@@ -25,8 +25,8 @@ const viewArtistPage=()=>{
 
 const pages={
     //this acts as store for tabs, teh setTab prop is callback funtion to set tabs
-    "artist-list":<ArtistList viewMusicPage={viewMusicPage}/>,
-    "music-list":<MusicTab artist={musicViewArtist} close={viewArtistPage}/>
+    "artist-list":<ArtistList viewMusicPage={viewMusicPage} refresh={refreshToggle}/>,
+    "music-list":<MusicTab artist={musicViewArtist} closeMusicList={viewArtistPage}/>
 
 }
 const refreshTab=()=>setRefreshToggle(!refreshToggle)
@@ -41,15 +41,15 @@ useEffect(() => {
      {pages[activeArtistTab]}
     </div>
     <Toaster/>
-   {activeArtistTab==="artist_list" && (
-     <div className='flex justify-evenly py-6 pr-10 gap-x-6 mt-6'>
+   {activeArtistTab==="artist-list" && (
+     <div className='flex justify-evenly py-6 pr-10 gap-x-6 mt-16'>
      <button  onClick={open} className="py-3 px-2 bg-black text-white rounded-md hover:bg-gray-400 hover:text-black">Add New Artist</button>
      <FileDownloader/>
      <FileUploader refreshTab={refreshTab}/>
      </div>
    )}
     <Drawer opened={opened} onClose={close} title="">
-        <ArtistForm/>
+        <ArtistForm refresh={refreshTab}/>
       </Drawer>
  </div>
   )

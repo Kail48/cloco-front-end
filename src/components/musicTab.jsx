@@ -25,7 +25,7 @@ useEffect(() => {
       <h1 className="md:text-xl font bold text-center mb-2">Songs by {artist.name}</h1>
       <button  onClick={open} className="py-2 px-2 bg-black text-white rounded-md hover:bg-gray-400 hover:text-black">Add New music</button>
       <div className="w-full h-96 overflow-y-scroll">
-        <MusicList artistId={artist.id} refreshToggle={refreshToggle} />
+        <MusicList artistId={artist.id} refreshFromTab={refreshToggle} />
       </div> 
       <Drawer opened={opened} onClose={close} title="" position="right">
         <MusicForm artistId={artist.id} refreshTab={refreshTab}/>
