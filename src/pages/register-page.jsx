@@ -114,7 +114,7 @@ export default function RegisterPage() {
               htmlFor="phone"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              Phone Number
+              Phone Number(10 digit)
             </label>
             <div className="mt-2">
               <input
