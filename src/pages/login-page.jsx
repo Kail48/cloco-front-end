@@ -3,6 +3,7 @@ import logo from "../assets/images/cloco-logo.svg";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import baseUrl from "../services/api";
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -131,12 +132,10 @@ export default function LoginPage() {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Don't have account?
-          <a
-            href="/register"
-            className="font-semibold leading-6 text-black hover:text-indigo-500"
-          >
-            SignUp
-          </a>
+          <Link to="/register"  className="font-semibold leading-6 text-black hover:text-indigo-500">
+          SignUp
+          </Link>
+         
         </p>
       </div>
     </div>
